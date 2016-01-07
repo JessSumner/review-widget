@@ -1,0 +1,142 @@
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <style>
+  body {
+   font-family: Verdana;
+  }
+  h1, h2, h3 {
+   color: darkblue;
+  }
+
+  .star-five {
+    margin: 50px 0;
+    position: relative;
+    display: inline-block;
+    color: gray;
+    width: 0px;
+    height: 0px;
+    border-right:  100px solid transparent;
+    border-bottom: 70px  solid gray;
+    border-left:   100px solid transparent;
+    -moz-transform:    rotate(35deg);
+    -webkit-transform: rotate(35deg);
+    -ms-transform:     rotate(35deg);
+    -o-transform:      rotate(35deg);
+  }
+
+  .star-five:before {
+    border-bottom: 80px solid gray;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    position: absolute;
+    height: 0;
+    width: 0;
+    top: -45px;
+    left: -65px;
+    display: block;
+    content: '';
+    -webkit-transform: rotate(-35deg);
+    -moz-transform:    rotate(-35deg);
+    -ms-transform:     rotate(-35deg);
+    -o-transform:      rotate(-35deg);
+  }
+
+  .star-five:after {
+    position: absolute;
+    display: block;
+    color: gray;
+    top: 3px;
+    left: -105px;
+    width: 0px;
+    height: 0px;
+    border-right: 100px solid transparent;
+    border-bottom: 70px solid gray;
+    border-left: 100px solid transparent;
+    -webkit-transform: rotate(-70deg);
+    -moz-transform:    rotate(-70deg);
+    -ms-transform:     rotate(-70deg);
+    -o-transform:      rotate(-70deg);
+    content: '';
+  }
+
+  .rating-circle {
+   height: 2em;
+   width: 2em;
+   border: .1em solid black;
+   border-radius: 1.1em;
+   display: inline-block;
+   margin: 0;
+   padding: .1em;
+  }
+
+  .rating-chosen {
+    color: green;
+    border-bottom: 70px  solid green;
+  }
+  .rating-chosen:before {
+    border-bottom: 80px solid green;
+  }
+
+  .rating-chosen:after {
+    border-bottom: 70px solid green;
+  }  
+
+  .rating-hover {
+    color: yellow;
+    border-bottom: 70px  solid yellow;
+  }
+
+  .rating-hover:before {
+    border-bottom: 80px solid yellow;
+  }
+
+  .rating-hover:after {
+    border-bottom: 70px solid yellow;
+  } 
+ </style>
+</head>
+<body>
+ <h1>Review my jQuery skills!</h1>
+ <h2>A review widget.</h2>
+ <div>The rating works on the scale of 1 being terrible and 5 being awesome.</div>
+ <h3>Rate my skills</h3>
+ <div id="rating-container">
+  <div class="star-five"></div>
+  <div class="star-five"></div>
+  <div class="star-five"></div>
+  <div class="star-five"></div>
+  <div class="star-five"></div>
+ </div>
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+ <script>
+    $(function() {
+      var rating;
+
+      $('.star-five').click(function(){
+        rating = $(this);
+        rating.removeClass('rating-hover').addClass('rating-chosen');
+        rating.prevAll().removeClass('rating-hover').addClass('rating-chosen');
+      });
+
+      $('.star-five').mouseenter(function(){
+        $(this).removeClass('rating-chosen').addClass('rating-hover');
+        $(this).prevAll().removeClass('rating-chosen').addClass('rating-hover');
+        $(this).nextAll().removeClass('rating-chosen');
+      });
+
+      $('.star-five').mouseleave(function(){
+        $(this).removeClass('rating-hover');
+        $(this).prevAll().removeClass('rating-hover');
+        if (rating) {
+          rating.addClass('rating-chosen');
+          rating.prevAll().addClass('rating-chosen');
+        }
+      });
+     
+    });
+ </script>
+</body>
+</html>
