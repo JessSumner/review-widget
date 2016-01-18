@@ -116,16 +116,20 @@
       <button type="button" id="update-max-value">Update max value</button>
     </div>
 
+    <button type="button" id="save-rating">Save rating</button>
+
+    <div id="output"></div>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
     <script>
       $(function() {
-        var rating;
+        var ratingClicked;
         
         $('#rating-container').delegate('.star-five', 'click', function(){
-          rating = $(this);
-          rating.removeClass('rating-hover').addClass('rating-chosen');
-          rating.prevAll().removeClass('rating-hover').addClass('rating-chosen');
+          ratingClicked = $(this);
+          ratingClicked.removeClass('rating-hover').addClass('rating-chosen');
+          ratingClicked.prevAll().removeClass('rating-hover').addClass('rating-chosen');
         });
 
         $('#rating-container').delegate('.star-five', 'mouseenter', function(){
@@ -137,9 +141,9 @@
         $('#rating-container').delegate('.star-five', 'mouseleave', function(){
           $(this).removeClass('rating-hover');
           $(this).prevAll().removeClass('rating-hover');
-          if (rating) {
-            rating.addClass('rating-chosen');
-            rating.prevAll().addClass('rating-chosen');
+          if (ratingClicked) {
+            ratingClicked.addClass('rating-chosen');
+            ratingClicked.prevAll().addClass('rating-chosen');
           }
         });
 
@@ -150,8 +154,18 @@
           while (index <= value) {
             $('#rating-container').append('<div class="star-five"></div>');
             index ++
-          }
-        });     
+          };
+        });
+
+        $('#save-rating').click(function () {
+          var url = 'http:jquery-edx.azurewebsites.net/api/Rating';
+          var index = $('#rating-container').children().index(ratingClicked) + 1;
+          var total = $('#rating-container').attr('max-value')
+          var rating = { value: index, maxValue: total}
+          $.post(url, rating).done(function(returnValue) {
+            $('#output').text('You chose ' + rating.value + ' out of ' + rating.maxValue + ' stars.');
+          });
+        });
       });
     </script>
   </body>
