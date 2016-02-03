@@ -99,7 +99,7 @@
   <body>
     <h1>Review my jQuery skills!</h1>
     <h2>A review widget.</h2>
-    <div>The rating works on the scale of 1 being terrible and 5 being awesome.</div>
+    <div>The rating works on the scale of 1 being terrible and <span class="top-score">5</span> being awesome.</div>
     <h3>Rate my skills</h3>
     <div id="rating-container" max-value="5">
      <div class="star-five"></div>
@@ -110,7 +110,7 @@
     </div>
 
     <div>
-      <h3> Don't want the rating to be out of 5? Update the maximum number of stars here!</h3>
+      <h3> Don't want the rating to be out of <span class="top-score">5</span>? Update the maximum number of stars here!</h3>
       <label for="max-value">Enter max value:</label>
       <input type="text" id="max-value" />
       <button type="button" id="update-max-value">Update max value</button>
@@ -155,6 +155,7 @@
             $('#rating-container').append('<div class="star-five"></div>');
             index ++
           };
+          $('.top-score').html(value);
         });
 
         $('#save-rating').click(function () {
